@@ -19,7 +19,8 @@
             </div>
         </nav>
 <?php
-$url = ("https://terraform-20201214143932231000000001.s3.amazonaws.com/");
+require_once('config.php');
+$url = $bucketUrl;
 $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
 $xml = file_get_contents($url, false, $context);
 $xml = simplexml_load_string($xml);
@@ -60,7 +61,7 @@ foreach($xml->Contents as $xmlContent){
         // Remember to run tests using PHPUnit: 'vendor/bin/phpunit tests'
 
         // composer autoload. Might require 'composer dump-autoload' to work.
-        require_once('config.php');
+        //require_once('config.php');
         // Build sql query and get results
         $sql = "SELECT emp_no, first_name, last_name FROM employees";
         $r = $conn->query($sql);
