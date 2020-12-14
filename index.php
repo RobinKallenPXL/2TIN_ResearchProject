@@ -18,18 +18,28 @@
                 </div>
             </div>
         </nav>
-        
+<?php
+$url = ("https://terraform-20201214143932231000000001.s3.amazonaws.com/");
+$context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+$xml = file_get_contents($url, false, $context);
+$xml = simplexml_load_string($xml);
+$imagesArray = array();
+
+foreach($xml->Contents as $xmlContent){
+    $imagesArray[] = $bucketUrl.$xmlContent->Key;
+}
+?>
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <?php
         // scan the images directory for images to use in the carousel
         // first 2 keys in the returned array are . and ..   We will need to filter those!
-        $images = scandir('assets/images');
+        $images = $imagesArray;
         foreach($images as $key => $image){
             if (!in_array($image,array(".",".."))){
                 // First item needs to get the active css class. Otherwise the carousel will not show
                 echo ($key == 2) ? '<div class="carousel-item active">' : '<div class="carousel-item">';
-                echo "<img class='d-block w-100' src='assets/images/$image'/></div>";
+                echo "<img class='d-block w-100' src='$image'/></div>";
             }     
         }
     ?>
