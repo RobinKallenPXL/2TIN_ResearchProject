@@ -41,7 +41,6 @@ foreach($xml->Contents as $xmlContent){
                 // First item needs to get the active css class. Otherwise the carousel will not show
                 echo ($key == 2) ? '<div class="carousel-item active">' : '<div class="carousel-item">';
                 echo "<img class='d-block w-100' src='$image'/></div>";
-                echo $image;
             }     
         }
     ?>
